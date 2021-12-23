@@ -4,6 +4,7 @@ const bcryptjs = require("bcryptjs");
 // jwt helps to create token=========================================
 const jwt = require("jsonwebtoken")
 
+const upload = require("../file/file");
 const router = new express.Router();
 const Customer = require("../models/CustomerModel");
 const { verifyCustomer } = require("../auth/auth");
@@ -70,5 +71,17 @@ router.post("/customer/login", function (req, res) {
 router.delete("/customer/delete", verifyCustomer, function(req,res){
     res.json({msg: " delete"});
 })
+
+// for uploading image use this route , this is for the reference
+router.post("/customer/profile", upload.single('user_image'), function(req, res){
+    console.log(req.file)
+    if(req.file == undefined){
+        return res.json({
+            message : "Invalid file format!!"
+        })
+    }
+
+})
+
 
 module.exports = router;
