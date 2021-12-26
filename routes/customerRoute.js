@@ -83,5 +83,28 @@ router.post("/customer/profile", upload.single('user_image'), function(req, res)
 
 })
 
+// view profile by customer - dashboard
+router.get("/customer/show", verifyCustomer, function(req, res){
+//console.log(req.customerInfo)
+res.json({
+    username: req.customerInfo.username,
+    email:req.customerInfo.email,
+    address: req.customerInfo.address,
+    Image: req.customerInfo.Image
+})
+})
+
+//profile update of the customer
+router.put("/customer/update", verifyCustomer, function(req,res){
+    const username = req.body.username;
+    const email = req.body.email
+    Customer.updateOne({_id : req.customerInfo._id},{
+        username : username,
+        email: email
+    })
+    .then()
+    .catch()
+})
+
 
 module.exports = router;

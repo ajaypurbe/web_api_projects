@@ -8,6 +8,7 @@ module.exports.verifyCustomer = function (req, res, next) {
     const data = jwt.verify(token, "mysecretkey");
     //console.log(data.customerId);
     Customer.findOne({ _id: data.customerId }).then(function (result){ 
+        // save the customer information 
         req.customerInfo = result;
         next();
     })
